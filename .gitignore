@@ -1,6 +1,5 @@
-**slprj/
+*slprj/
 *.rt-win64
 *.slxc
 *.slx.autosave
-helicopter_quarc_win64/*
-
+*helicopter_quarc_win64/
