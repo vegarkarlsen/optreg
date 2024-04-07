@@ -8,17 +8,18 @@ addpath(genpath("../handout_files/template_problem_2"))
 
 % Discrete time system model. x = [lambda r p p_dot]'
 delta_t	= 0.25; % sampling time
-
-Ac = [
-    0 1 0 0;
-    0 0 -K_2 0;
-    0 0 0 1;
-    0 0 -K_1*K_pp -K_1*K_pd];
-
-Bc = [0; 0; 0; K_1*K_pp];
-
-A1 = eye(4) + delta_t * Ac;
-B1 = delta_t*Bc;
+A1 = [
+    1 delta_t 0 0;
+    0 1 -delta_t*K_2 0;
+    0 0 1 delta_t;
+    0 0 -delta_t*K_1*K_pp 1-delta_t*K_1*K_pd
+];
+B1 = [
+    0;
+    0;
+    0;
+    delta_t * K_1 * K_pp
+];
 
 % Number of states and inputs
 mx = size(A1,2); % Number of states (number of columns in A)
@@ -57,7 +58,7 @@ Q1(1,1) = 1;                            % Weight on state x1
 Q1(2,2) = 0;                            % Weight on state x2
 Q1(3,3) = 0;                            % Weight on state x3
 Q1(4,4) = 0;                            % Weight on state x4
-P1 = 1;                              % Weight on input, use (0.12, 1.2, 12)
+P1 = 0.12;                              % Weight on input, use (0.12, 1.2, 12)
 Q = 2*gen_q(Q1,P1,N,M);                 % Generate Q, hint: gen_q
 c = [];                                 % Generate c, this is the linear constant term in the QP
 

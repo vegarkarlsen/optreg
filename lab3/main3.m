@@ -3,12 +3,11 @@
 % Updated spring 2018, Andreas L. Flåten
 
 %% Initialization and model definition
-run ../handout_files/init_files_2021_v2/init06.m
+run ../handout_files/init_files_2021_v2/init05.m
 addpath(genpath("../handout_files/template_problem_2"))
 
 % Discrete time system model. x = [lambda r p p_dot]'
 delta_t	= 0.25; % sampling time
-
 Ac = [
     0 1 0 0;
     0 0 -K_2 0;
@@ -61,6 +60,12 @@ P1 = 1;                              % Weight on input, use (0.12, 1.2, 12)
 Q = 2*gen_q(Q1,P1,N,M);                 % Generate Q, hint: gen_q
 c = [];                                 % Generate c, this is the linear constant term in the QP
 
+%% LQR
+Q_LQR = 0.01*diag([3, 1, 0.05, 0.1]); %diag(diag(ones(mx)));
+R_LQR = 10; %diag(diag(ones(mu)));
+
+[K, S, CLP] = dlqr(A1, B1, Q_LQR, R_LQR);
+
 %% Generate system matrixes for linear model
 Aeq = gen_aeq(A1,B1,N,mx,mu);             % Generate A, hint: gen_aeq
 beq = zeros(size(Aeq, 1), 1);             % Generate b
@@ -97,12 +102,14 @@ x2  = [zero_padding; x2; zero_padding];
 x3  = [zero_padding; x3; zero_padding];
 x4  = [zero_padding; x4; zero_padding];
 
+t = 0:delta_t:delta_t*(length(u)-1);
 
-
+%% To Simulink
+u_simulink = timeseries(u, t);
+x_padding = [x1, x2, x3, x4].';
+x_simulink = timeseries(x_padding, t);
 
 %% Plotting
-t = 0:delta_t:delta_t*(length(u)-1);
-u_simulink = timeseries(u, t);
 
 figure(2)
 subplot(511)
@@ -120,3 +127,6 @@ ylabel('p')
 subplot(515)
 plot(t,x4,'m',t,x4','mo'),grid
 xlabel('tid (s)'),ylabel('pdot')
+
+
+
