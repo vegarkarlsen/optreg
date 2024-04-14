@@ -60,11 +60,7 @@ P1 = 1;                              % Weight on input, use (0.12, 1.2, 12)
 Q = 2*gen_q(Q1,P1,N,M);                 % Generate Q, hint: gen_q
 c = [];                                 % Generate c, this is the linear constant term in the QP
 
-%% LQR
-Q_LQR = 0.01*diag([3, 1, 0.05, 0.1]); %diag(diag(ones(mx)));
-R_LQR = 10; %diag(diag(ones(mu)));
 
-[K, S, CLP] = dlqr(A1, B1, Q_LQR, R_LQR);
 
 %% Generate system matrixes for linear model
 Aeq = gen_aeq(A1,B1,N,mx,mu);             % Generate A, hint: gen_aeq

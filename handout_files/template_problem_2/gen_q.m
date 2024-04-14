@@ -20,4 +20,4 @@ function Q = gen_q(Q1,P1,N,M)
 q1	= diag_repeat(Q1,N);
 p1	= diag_repeat(P1,M);
 
-Q	= blkdiag(q1,p1); 
+Q	= blkdiag(q1,p1);
