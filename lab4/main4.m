@@ -1,7 +1,7 @@
 
 % Init
-run handout_files/init_files_2021_v2/init05.m
-addpath(genpath("handout_files/template_problem_2"))
+run ../handout_files/init_files_2021_v2/init05.m
+addpath(genpath("../handout_files/template_problem_2"))
 
 % Continous model
 
@@ -22,6 +22,7 @@ B_c = [ 0 0;
         0 K_3*K_ep; ];
 
 % Number of states and inputs
+global N nx
 nx = size(A_c, 2);
 nu = size(B_c, 2);
 
@@ -42,7 +43,8 @@ x6_0 = 0;                               % e_dot
 x0 = [x1_0 x2_0 x3_0 x4_0 x5_0 x6_0]';            % Initial values
 
 % Time horizon and initialization 
-N = 15;
+
+N = 40;
 M = N;
 n = N*nx+M*nu;
 z0 = zeros(n,1);
@@ -60,7 +62,7 @@ r1 = 1;     % q1
 r2 = 1;     % q2
 R = 2*diag([r1 r2]);
 
-G = gen_q(Q,R,N,M);
+G = 2*gen_q(Q,R,N,M);
 
 % system
 Aeq = gen_aeq(A, B, N, nx, nu);
@@ -83,8 +85,10 @@ vub(n) = 0;
 
 % solve
 f = @(z) 1/2 *z.'* G *z;
-options = optimoptions('fmincon','Algorithm','sqp','MaxFunEvals', 15000);
+tic
+options = optimoptions('fmincon','Algorithm','sqp','MaxFunEvals', 400000);
 [z, fval, exitflag] = fmincon(f,z0, [], [], Aeq, beq, vlb, vub, @constraints, options);
+toc
 
 % Extract control inputs and states
 u1 = [z(N*nx+1:nu:n);z(n-1)];           % Control input 1 from solution
@@ -112,10 +116,19 @@ x6  = [zero_padding; x6; zero_padding];
 
 t = 0:Ts:Ts*(length(u1)-1);
 
+% LQR
+Q_LQR = diag([5, 1, 1, 0.5, 50, 10]); %diag(diag(ones(mx)));
+R_LQR = diag([0.1 0.1]);
+
+[K_LQR, S, CLP] = dlqr(A, B, Q_LQR, R_LQR);
+
 % to simulink
-u_simulink = timeseries(u, t);
-x_padding = [x1, x2, x3, x4].';
-x_simulink = timeseries(x_padding, t);
+u_out = [u1 u2];
+u_simulink = timeseries(u_out, t);
+
+x_out = [x1 x2 x3 x4 x5 x6];
+x_simulink = timeseries(x_out, t);
+
 
 %% Plotting
 
