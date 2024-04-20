@@ -59,7 +59,7 @@ q6 = 0;
 Q = 2*diag([q1,q2,q3,q4,q5,q6]);
 
 r1 = 1;     % q1
-r2 = 1;     % q2
+r2 = 0.01;     % q2
 R = 2*diag([r1 r2]);
 
 G = 2*gen_q(Q,R,N,M);
@@ -116,11 +116,11 @@ x6  = [zero_padding; x6; zero_padding];
 
 t = 0:Ts:Ts*(length(u1)-1);
 
-% LQR
-Q_LQR = diag([5, 1, 1, 0.5, 50, 10]); %diag(diag(ones(mx)));
-R_LQR = diag([0.1 0.1]);
-
-[K_LQR, S, CLP] = dlqr(A, B, Q_LQR, R_LQR);
+% % LQR
+% Q_LQR = diag([5, 1, 1, 0.5, 50, 10]); %diag(diag(ones(mx)));
+% R_LQR = diag([0.1 0.1]);
+% 
+% [K_LQR, S, CLP] = dlqr(A, B, Q_LQR, R_LQR);
 
 % to simulink
 u_out = [u1 u2];

@@ -104,3 +104,5 @@ x4  = [zero_padding; x4; zero_padding];
 % Export to simulink
 t = 0:Ts:Ts*(length(u)-1);
 u_simulink = timeseries(u, t);
+x_padding = [x1, x2, x3, x4].';
+x_simulink = timeseries(x_padding, t);
