@@ -2,26 +2,26 @@ clear
 
 folder = "LQR_tune/";
 files = [
-% 	"L3_Q_3_0.1_0.05_0.1_R_0.1.mat"
-% 	"L3_Q_0.41_10.13_3.65_14.6_R_3.65.mat"
-% 	"L3_Q_1_1_1_1_R_1.mat"
-% 	"L3_Q_12_1_1_1_R_2.mat"
-%     "L3_Q_12_1_1_1_R_0.5.mat"
-%     "L3_Q_12_0.5_0.5_0.5_R_0.5.mat"
-% 	"L3_Q_1_10.13_3.65_14.6_R_3.65.mat"
-% 	"L3_Q_3_10.13_3.65_14.6_R_3.65.mat"
-% 	"L3_Q_5_10.13_3.65_14.6_R_3.65.mat"
-% 	"L3_Q_8_10.13_3.65_14.6_R_3.65.mat"
-% 	"L3_Q_12_10.13_3.65_14.6_R_3.65.mat"
-% 	"L3_Q_12_10_5_14.6_R_3.65.mat"
-%     "L3_Q_12_10_5_5_R_3.65.mat"
-%     "L3_Q_12_10_5_5_R_2.mat"
-%     "L3_Q_12_10_5_5_R_10.mat"
-%     "L3_Q_12_10_20_14.6_R_3.65.mat"
-%     "L3_Q_12_10_2_14.6_R_3.65.mat"
-%     "L3_Q_12_5_3.65_14.6_R_3.65.mat"
-%     "L3_Q_12_20_3.65_14.6_R_3.65.mat"
-% 	"L3_Q_20_10.13_3.65_14.6_R_3.65.mat"
+	% "L3_Q_3_0.1_0.05_0.1_R_0.1.mat"           % Denne er best, men kokt
+	% "L3_Q_0.41_10.13_3.65_14.6_R_3.65.mat"    % Brysons
+	% "L3_Q_1_1_1_1_R_1.mat"                      % Intial
+	% "L3_Q_12_1_1_1_R_2.mat"
+    "L3_Q_12_1_1_1_R_0.5.mat"                   % Beste funnet selv
+    % "L3_Q_12_0.5_0.5_0.5_R_0.5.mat"
+	% "L3_Q_1_10.13_3.65_14.6_R_3.65.mat"
+	"L3_Q_3_10.13_3.65_14.6_R_3.65.mat"
+	"L3_Q_5_10.13_3.65_14.6_R_3.65.mat"
+	"L3_Q_8_10.13_3.65_14.6_R_3.65.mat"
+	"L3_Q_12_10.13_3.65_14.6_R_3.65.mat"        % Funnet med å bare inkrementere fra brysons rule
+	% "L3_Q_12_10_5_14.6_R_3.65.mat"
+    % "L3_Q_12_10_5_5_R_3.65.mat"
+    % "L3_Q_12_10_5_5_R_2.mat"
+    % "L3_Q_12_10_5_5_R_10.mat"
+    % "L3_Q_12_10_20_14.6_R_3.65.mat"
+    % "L3_Q_12_10_2_14.6_R_3.65.mat"
+    % "L3_Q_12_5_3.65_14.6_R_3.65.mat"
+    % "L3_Q_12_20_3.65_14.6_R_3.65.mat"
+	% "L3_Q_20_10.13_3.65_14.6_R_3.65.mat"
 ];
 
 n_files = size(files, 1);
@@ -57,12 +57,14 @@ t = 0:ts:ts*optimal_datapoints;
 figure(2)
 subplot(2,1,1)
 plot(t, [x_out(1,:); travel])
+% legend("\lambda*","\lambda brysons", "\lambda intiial", "\lambda best")
 legend
 grid
 title("travel")
 
 subplot(2,1,2)
 plot(t, [x_out(3,:); pitch])
+% legend("p*", "p brysons", "p initial", "p best")
 legend
 grid
 title("pitch")

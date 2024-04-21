@@ -58,8 +58,8 @@ q5 = 0;
 q6 = 0;
 Q = 2*diag([q1,q2,q3,q4,q5,q6]);
 
-r1 = 1;     % q1
-r2 = 1;     % q2
+r1 = 0.12;     % q1
+r2 = 0.12;     % q2
 R = 2*diag([r1 r2]);
 
 G = 2*gen_q(Q,R,N,M);
@@ -85,10 +85,9 @@ vub(n) = 0;
 
 % solve
 f = @(z) 1/2 *z.'* G *z;
-tic
 options = optimoptions('fmincon','Algorithm','sqp','MaxFunEvals', 400000);
 [z, fval, exitflag] = fmincon(f,z0, [], [], Aeq, beq, vlb, vub, @constraints, options);
-toc
+
 
 % Extract control inputs and states
 u1 = [z(N*nx+1:nu:n);z(n-1)];           % Control input 1 from solution
@@ -130,7 +129,7 @@ x_out = [x1 x2 x3 x4 x5 x6].';
 x_simulink = timeseries(x_out, t);
 
 
-% save("optimal/L4_q1_1_q2_0.01.mat", "u_out", "x_out")
+% save("optimal/L4_q1_0.12_q2_0.12.mat", "u_out", "x_out")
 
 
 %% plt

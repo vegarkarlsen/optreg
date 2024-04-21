@@ -44,7 +44,8 @@ plot(t, x_out(5,:).')
 hold on
 plot(t,elevation)
 grid
-legend
+legend("Optimal", "test1", "test2", "test3", "test4", "test5")
+title("elevation")
 hold off
 
 subplot(2,1,2)
@@ -52,7 +53,9 @@ plot(t, x_out(1,:).')
 hold on
 plot(t, travel)
 grid
-legend
+legend("Optimal", "test1", "test2", "test3", "test4", "test5")
+title("travel")
+hold off
 
 % figure(1)
 % plot(t,elevation)
