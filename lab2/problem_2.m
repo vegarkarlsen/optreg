@@ -60,7 +60,7 @@ Q(2,2) = 0;                            % Weight on state x2
 Q(3,3) = 0;                            % Weight on state x3
 Q(4,4) = 0;                            % Weight on state x4
 
-q = 12;                                  % Weight on input, use (0.12, 1.2, 12)
+q = 1;                                  % Weight on input, use (0.12, 1.2, 12)
 R = 2*q;                                 
 G = 2*gen_q(Q,R,N,M);                   % CostMatrix
 c = [];                                 % linear constant term

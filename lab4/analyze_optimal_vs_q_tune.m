@@ -1,11 +1,10 @@
 
-folder = "LQR_TUNE/";
+folder = "QP_q_tune/";
 files = [
-	"L4_Q_12_10.13_3.65_14.6_100_50_R_3.65_100.mat"
-	"L4_Q_12_10.13_3.65_14.6_25_50_R_3.65_25.mat"
-	"L4_Q_12_10.13_3.65_14.6_50_625_R_3.65_25.mat"
-	"L4_Q_12_10.13_3.65_14.6_100_50_R_3.65_25.mat"
-	"L4_Q_12_10.13_3.65_14.6_25_625_R_3.65_25.mat"
+    "L4_q1_0.12_q2_0.12.mat"
+    "L4_q1_1_q2_0.01.mat"
+    "L4_q1_1_q2_0.12.mat"
+    "L4_q1_1_q2_2.mat"
 ];
 n_files = size(files, 1);
 
@@ -38,7 +37,7 @@ load("optimal/L4_q1_1_q2_1.mat")
 ts = 0.25;
 t = 0:ts:ts*optimal_datapoints;
 
-figure(2)
+figure(3)
 subplot(2,1,1)
 plot(t, x_out(5,:).')
 hold on
@@ -53,6 +52,7 @@ hold on
 plot(t, travel)
 grid
 legend
+hold off
 
 % figure(1)
 % plot(t,elevation)
