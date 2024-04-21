@@ -1,5 +1,4 @@
 
-% dataFiles = ["L4_Q_12_10.13_3.65_14.6_25_50_R_3.65_25.mat", "L4_Q_12_10.13_3.65_14.6_25_50_R_3.65_25.mat"];
 addpath(genpath("QP_q_tune"))
 dataFiles = [
     "L4_q1_0.12_q2_0.12.mat"

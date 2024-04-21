@@ -1,5 +1,21 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
 % Initialization and model definition
-run ../handout_files/init_files_2021_v2/init05.m
+run ../handout_files/init_files_2021_v2/init06.m
 addpath(genpath("../handout_files/template_problem_2"))
 
 % State Space model (x = [lambda r p p_dot]')
@@ -49,7 +65,7 @@ xl(3)   = ul;                           % Lower bound on state x3
 xu(3)   = uu;                           % Upper bound on state x3
 
 % Constraints
-[zlb,zub]       = gen_constraints(N,M,xl,xu,ul,uu); 
+[zlb,zub]       = gen_constraints(N,M,xl,xu,ul,uu);
 zlb(N*mx+M*mu)  = 0;                    % We want the last input to be zero
 zub(N*mx+M*mu)  = 0;                    % We want the last input to be zero
 
@@ -60,8 +76,7 @@ Q(2,2) = 0;                            % Weight on state x2
 Q(3,3) = 0;                            % Weight on state x3
 Q(4,4) = 0;                            % Weight on state x4
 
-q = 12;                                  % Weight on input, use (0.12, 1.2, 12)
-R = 2*q;                                 
+R = 12;                                 % Weight on input, use (0.12, 1.2, 12)
 G = 2*gen_q(Q,R,N,M);                   % CostMatrix
 c = [];                                 % linear constant term
 
@@ -72,7 +87,7 @@ beq(1:size(A, 1)) = A*x0;
 
 % Solve QP problem with linear model
 tic
-[z,zval] = quadprog(G,c,[], [], Aeq, beq, zlb, zub);
+[z,lambda] = quadprog(G,c,[], [], Aeq, beq, zlb, zub);
 t1=toc;
 
 % Calculate objective value
@@ -91,7 +106,6 @@ x2 = [x0(2);z(2:mx:N*mx)];              % State x2 from solution
 x3 = [x0(3);z(3:mx:N*mx)];              % State x3 from solution
 x4 = [x0(4);z(4:mx:N*mx)];              % State x4 from solution
 
-
 num_variables = 5/Ts;
 zero_padding = zeros(num_variables,1);
 unit_padding  = ones(num_variables,1);
@@ -105,26 +119,18 @@ x4  = [zero_padding; x4; zero_padding];
 % Export to simulink
 t = 0:Ts:Ts*(length(u)-1);
 u_simulink = timeseries(u, t);
+\end{verbatim}
 
-x_out = [x1 x2 x3 x4].';
+        \color{lightgray} \begin{verbatim}
+Minimum found that satisfies the constraints.
 
-% save("optimal/L1_q_1.mat", "u", "x_out")
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the value of the optimality tolerance,
+and constraints are satisfied to within the value of the constraint tolerance.
 
-% plot
-figure(1);
-% hold on;
-subplot(511)
-stairs(t,u),grid
-ylabel('u')
-subplot(512)
-plot(t,x1,'r',t,x1,'mo'),grid
-ylabel('lambda')
-subplot(513)
-plot(t,x2,'r',t,x2','mo'),grid
-ylabel('r')
-subplot(514)
-plot(t,x3,'r',t,x3,'mo'),grid
-ylabel('p')
-subplot(515)
-plot(t,x4,'r',t,x4','mo'),grid
-xlabel('tid (s)'),ylabel('pdot')
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+
