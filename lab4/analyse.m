@@ -25,6 +25,7 @@ for i = 1:size(dataFiles)
    pitch_rate(i,:) = ans(5,:);
    elevation(i,:) = ans(6,:);
    elevation_rate(i,:) = ans(7,:);
+
 end
 t = ans(1,:);
 

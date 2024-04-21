@@ -59,7 +59,7 @@ q6 = 0;
 Q = 2*diag([q1,q2,q3,q4,q5,q6]);
 
 r1 = 1;     % q1
-r2 = 0.01;     % q2
+r2 = 1;     % q2
 R = 2*diag([r1 r2]);
 
 G = 2*gen_q(Q,R,N,M);
@@ -123,12 +123,20 @@ t = 0:Ts:Ts*(length(u1)-1);
 % [K_LQR, S, CLP] = dlqr(A, B, Q_LQR, R_LQR);
 
 % to simulink
-u_out = [u1 u2];
+u_out = [u1 u2].';
 u_simulink = timeseries(u_out, t);
 
-x_out = [x1 x2 x3 x4 x5 x6];
+x_out = [x1 x2 x3 x4 x5 x6].';
 x_simulink = timeseries(x_out, t);
 
+
+% save("optimal/L4_q1_1_q2_0.01.mat", "u_out", "x_out")
+
+
+%% plt
+
+figure(1)
+plot(t,x5)
 
 %% Plotting
 
